@@ -23,6 +23,8 @@ function login() {
       if (data.length == 1){
         //Login success!
         window.location.href = "/home";
+        localStorage.setItem('_username', input_username);
+        localStorage.setItem('_password', input_password);  
       }
     }
   }).catch(function (err) {
