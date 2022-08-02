@@ -8,10 +8,9 @@ module.exports = function (app, mysqlConnection) {
             "SET @_username = ?; " +
             "SET @_password = ?; " +
             "SET @_first_name = ?; " +
-            "SET @_last_name = ?; " +
-            "SET @_sw_active = ?; ";
-        var procedure = "CALL sp_crud_user(@_operation, @_id_user, @_username, @_password, @_first_name, @_last_name,@_sw_active);"
-        var dataValues = [userData.operation, userData.id_user, userData.username, userData.password, userData.first_name, userData.last_name, userData.sw_active];
+            "SET @_last_name = ?; ";
+        var procedure = "CALL sp_crud_user(@_operation, @_id_user, @_username, @_password, @_first_name, @_last_name);"
+        var dataValues = [userData.operation, userData.id_user, userData.username, userData.password, userData.first_name, userData.last_name];
         mysqlConnection.query(parameters + procedure, dataValues, (err, rows, fields) => {
             if (!err)
                 res.send(rows);
