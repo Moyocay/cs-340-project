@@ -1,4 +1,5 @@
-const endpoint = 'http://localhost:8080/api/User';
+// const endpoint = 'http://localhost:8080/api/User';
+const endpoint = 'http://flip3.engr.oregonstate.edu:8080/api/User';
 
 function login() {
   var input_username = document.getElementById("username").value;
@@ -18,18 +19,22 @@ function login() {
     return response.json();
   }).then(function (data) {
     console.log("Result: " + data);
-    
-    if (data != null){
-      if (data.length == 1){
+
+    if (data != null) {
+      if (data.length == 1) {
         //Login success!
         window.location.href = "/home";
         localStorage.setItem('_username', input_username);
-        localStorage.setItem('_password', input_password);  
+        localStorage.setItem('_password', input_password);
+        localStorage.setItem('_first_name', data[0].first_name)
+      } else {
+        alert("User not found :(");
       }
     }
   }).catch(function (err) {
     // Error :(
     console.log("Error!");
+    alert("An error has occurred during login...");
   });
 }
 

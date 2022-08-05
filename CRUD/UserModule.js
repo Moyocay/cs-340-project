@@ -1,5 +1,6 @@
 module.exports = function (app, mysqlConnection) {
 
+
     //Create / Update operations
     app.post('/api/User', (req, res) => {
         let userData = req.body;
@@ -12,10 +13,23 @@ module.exports = function (app, mysqlConnection) {
         var procedure = "CALL sp_crud_user(@_operation, @_id_user, @_username, @_password, @_first_name, @_last_name);"
         var dataValues = [userData.operation, userData.id_user, userData.username, userData.password, userData.first_name, userData.last_name];
         mysqlConnection.query(parameters + procedure, dataValues, (err, rows, fields) => {
-            if (!err)
-                res.send(rows);
-            else
-                res.send(err.sqlMessage);
+            if (!err){
+                var resultJson = {
+                    data : [],
+                    code : "OK",
+                    msg: ""
+                };
+                resultJson.data = rows;
+                res.send(resultJson);
+            } else {
+                var resultJson = {
+                    data : [],
+                    code : "ERROR",
+                    msg: err.sqlMessage
+                };
+                resultJson.data = err;
+                res.send(resultJson);
+            } 
         })
     });
 
@@ -46,7 +60,6 @@ module.exports = function (app, mysqlConnection) {
                     console.log(err);
             })
         }
-
     });
 
     app.delete('/api/User/:username', (req, res) => {
@@ -57,4 +70,6 @@ module.exports = function (app, mysqlConnection) {
                 console.log(err);
         })
     });
+
+
 }

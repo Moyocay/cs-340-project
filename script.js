@@ -18,27 +18,23 @@ app.use(bodyparser.json());
 app.use(express.static('public'));
 
 //MySQL details
-// var mysqlConnection = mysql.createConnection({
-//     host: 'classmysql.engr.oregonstate.edu',
-//     user: 'cs340_villarmo',
-//     password: '4980',
-//     database: 'cs340_villarmo',
-//     multipleStatements: true
-// });
 var mysqlConnection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'moises',
-    password: 'moyocay28',
-    database: 'cs340',
+    host: 'classmysql.engr.oregonstate.edu',
+    user: 'cs340_villarmo',
+    password: '4980',
+    database: 'cs340_villarmo',
     multipleStatements: true
 });
 
-mysqlConnection.connect((err) => {
-    if (!err)
-        console.log('Connection Established Successfully');
-    else
-        console.log('Connection Failed!' + JSON.stringify(err, undefined, 2));
-});
+startMysqlConnection();
+
+// var mysqlConnection = mysql.createConnection({
+//     host: '127.0.0.1',
+//     user: 'moises',
+//     password: 'moyocay28',
+//     database: 'cs340',
+//     multipleStatements: true
+// });
 
 require('./CRUD/UserModule')(app, mysqlConnection);
 
@@ -61,3 +57,21 @@ app.get('/myAccount', function (req, res) {
 });
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}..`));
+
+function startMysqlConnection(){
+    mysqlConnection.connect((err) => {
+        if (!err)
+            console.log('Connection Established Successfully');
+        else
+            console.log('Connection Failed!' + JSON.stringify(err, undefined, 2));
+    });
+}
+
+function closeMysqlConnection(){
+    mysqlConnection.end((err) => {
+        if (!err)
+            console.log('Connection Closed Successfully');
+        else
+            console.log('Connection Close Failed!' + JSON.stringify(err, undefined, 2));
+    });
+}
