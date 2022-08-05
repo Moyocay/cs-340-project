@@ -1,8 +1,9 @@
-module.exports = function (app, mysqlConnection) {
+module.exports = function (app, mysql, config) {
 
-
+    let mysqlConnection = null; 
     //Create / Update operations
     app.post('/api/User', (req, res) => {
+        mysqlConnection = mysql.createConnection(config);
         let userData = req.body;
         var parameters = "SET @_operation = ?; " +
             "SET @_id_user = ?; " +
@@ -31,6 +32,7 @@ module.exports = function (app, mysqlConnection) {
                 res.send(resultJson);
             } 
         })
+        mysqlConnection.end();
     });
 
     //Creating GET Router to fetch all the learner details from the MySQL Database
@@ -45,6 +47,7 @@ module.exports = function (app, mysqlConnection) {
 
     //Creating GET Router to fetch all the learner details from the MySQL Database
     app.get('/api/User', (req, res) => {
+        mysqlConnection = mysql.createConnection(config);
         if (req.query.username != null) {
             mysqlConnection.query('SELECT * FROM User where username = ? AND password = MD5(?) AND sw_active = 1;', [req.query.username, req.query.password], (err, rows, fields) => {
                 if (!err)
@@ -60,15 +63,18 @@ module.exports = function (app, mysqlConnection) {
                     console.log(err);
             })
         }
+        mysqlConnection.end();
     });
 
     app.delete('/api/User/:username', (req, res) => {
+        mysqlConnection = mysql.createConnection(config);
         mysqlConnection.query('UPDATE User SET sw_active = 0 where username = ?;', [req.params.username], (err, rows, fields) => {
             if (!err)
                 res.send(rows);
             else
                 console.log(err);
         })
+        mysqlConnection.end();
     });
 
 

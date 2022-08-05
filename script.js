@@ -4,6 +4,7 @@ const bodyparser = require('body-parser');
 var app = express();
 const path = require('path');
 const handlebars = require('express-handlebars');
+const config = require('./CRUD/config.js');
 
 app.set('view engine', 'hbs');
 
@@ -17,26 +18,7 @@ app.engine('hbs', handlebars.engine({
 app.use(bodyparser.json());
 app.use(express.static('public'));
 
-//MySQL details
-var mysqlConnection = mysql.createConnection({
-    host: 'classmysql.engr.oregonstate.edu',
-    user: 'cs340_villarmo',
-    password: '4980',
-    database: 'cs340_villarmo',
-    multipleStatements: true
-});
-
-startMysqlConnection();
-
-// var mysqlConnection = mysql.createConnection({
-//     host: '127.0.0.1',
-//     user: 'moises',
-//     password: 'moyocay28',
-//     database: 'cs340',
-//     multipleStatements: true
-// });
-
-require('./CRUD/UserModule')(app, mysqlConnection);
+require('./CRUD/UserModule')(app, mysql, config);
 
 app.get('/', function (req, res) {
     res.redirect('/login');
@@ -64,14 +46,5 @@ function startMysqlConnection(){
             console.log('Connection Established Successfully');
         else
             console.log('Connection Failed!' + JSON.stringify(err, undefined, 2));
-    });
-}
-
-function closeMysqlConnection(){
-    mysqlConnection.end((err) => {
-        if (!err)
-            console.log('Connection Closed Successfully');
-        else
-            console.log('Connection Close Failed!' + JSON.stringify(err, undefined, 2));
     });
 }
