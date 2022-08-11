@@ -20,6 +20,7 @@ app.use(express.static('public'));
 
 require('./CRUD/UserModule')(app, mysql, config);
 require('./CRUD/LocationModule')(app, mysql, config);
+require('./CRUD/ExplorerModule')(app, mysql, config);
 
 app.get('/', function (req, res) {
     res.redirect('/login');
