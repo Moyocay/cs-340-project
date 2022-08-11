@@ -49,14 +49,14 @@ module.exports = function (app, mysql, config) {
     app.get('/api/User', (req, res) => {
         mysqlConnection = mysql.createConnection(config);
         if (req.query.username != null) {
-            mysqlConnection.query('SELECT * FROM User where username = ? AND password = MD5(?) AND sw_active = 1;', [req.query.username, req.query.password], (err, rows, fields) => {
+            mysqlConnection.query('SELECT * FROM user where username = ? AND password = MD5(?) AND sw_active = 1;', [req.query.username, req.query.password], (err, rows, fields) => {
                 if (!err)
                     res.send(rows);
                 else
                     console.log(err);
             })
         } else {
-            mysqlConnection.query('SELECT * FROM User', (err, rows, fields) => {
+            mysqlConnection.query('SELECT * FROM user', (err, rows, fields) => {
                 if (!err)
                     res.send(rows);
                 else
@@ -68,7 +68,7 @@ module.exports = function (app, mysql, config) {
 
     app.delete('/api/User/:username', (req, res) => {
         mysqlConnection = mysql.createConnection(config);
-        mysqlConnection.query('UPDATE User SET sw_active = 0 where username = ?;', [req.params.username], (err, rows, fields) => {
+        mysqlConnection.query('UPDATE user SET sw_active = 0 where username = ?;', [req.params.username], (err, rows, fields) => {
             if (!err)
                 res.send(rows);
             else
