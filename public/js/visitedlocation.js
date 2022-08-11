@@ -73,6 +73,7 @@ function addItemToTable(item) {
     var cell_desc = document.createElement("td");
     var cell_x = document.createElement("td");
     var cell_y = document.createElement("td");
+    var cell_date = document.createElement("td");
     var cell_active = document.createElement("td");
 
 
@@ -81,6 +82,7 @@ function addItemToTable(item) {
     cell_desc.appendChild(document.createTextNode(item.location_desc));
     cell_x.appendChild(document.createTextNode(item.x_position));
     cell_y.appendChild(document.createTextNode(item.y_position));
+    cell_date.appendChild(document.createTextNode(item.visit_datetime));
     cell_active.appendChild(document.createTextNode((item.loc_sw_active = 1 ? 'Active' : 'Not Active')));
 
     rowNode.appendChild(cell_id);
@@ -88,6 +90,7 @@ function addItemToTable(item) {
     rowNode.appendChild(cell_desc);
     rowNode.appendChild(cell_x);
     rowNode.appendChild(cell_y);
+    rowNode.appendChild(cell_date);
     rowNode.appendChild(cell_active);
 
     table.appendChild(rowNode);
