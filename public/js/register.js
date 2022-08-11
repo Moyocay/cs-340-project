@@ -1,5 +1,4 @@
-const endpoint = 'http://localhost:8080/api/User';
-// const endpoint = 'http://flip3.engr.oregonstate.edu:8080/api/User';
+const endpoint = url + "User";
 
 
 function register() {
