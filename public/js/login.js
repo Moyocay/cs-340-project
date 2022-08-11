@@ -1,7 +1,5 @@
-// const endpoint = 'http://localhost:8080/api/User';
-const endpoint = 'http://flip3.engr.oregonstate.edu:8080/api/User';
-
 function login() {
+  const endpoint = url + "User";
   var input_username = document.getElementById("username").value;
   var input_password = document.getElementById("password").value;
 
@@ -27,6 +25,7 @@ function login() {
         localStorage.setItem('_username', input_username);
         localStorage.setItem('_password', input_password);
         localStorage.setItem('_first_name', data[0].first_name)
+        localStorage.setItem('_id_user', data[0].id_user)
       } else {
         alert("User not found :(");
       }

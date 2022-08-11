@@ -1,5 +1,5 @@
-// const endpoint = 'http://localhost:8080/api/User';
-const endpoint = 'http://flip3.engr.oregonstate.edu:8080/api/User';
+const endpoint = 'http://localhost:8080/api/User';
+// const endpoint = 'http://flip3.engr.oregonstate.edu:8080/api/User';
 
 
 function register() {
@@ -61,8 +61,9 @@ function register() {
                         alert("An error has ocurred during registration...");
                     }
                 } else if (dataJson.code == "OK") {
-                    dataReceived = JSON.parse(dataJson);
                     alert("User created successfully!");
+                    window.location.href = '/login';
+                    dataReceived = JSON.parse(dataJson);
                 }
             }
         })

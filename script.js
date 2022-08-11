@@ -19,6 +19,7 @@ app.use(bodyparser.json());
 app.use(express.static('public'));
 
 require('./CRUD/UserModule')(app, mysql, config);
+require('./CRUD/LocationModule')(app, mysql, config);
 
 app.get('/', function (req, res) {
     res.redirect('/login');
@@ -36,6 +37,12 @@ app.get('/home', function (req, res) {
 });
 app.get('/myAccount', function (req, res) {
     res.render('myaccount');
+});
+app.get('/newLocation', function (req, res) {
+    res.render('newlocation');
+});
+app.get('/visitedLocation', function (req, res) {
+    res.render('visitedlocation');
 });
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}..`));

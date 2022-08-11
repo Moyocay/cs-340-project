@@ -1,7 +1,4 @@
-// const endpoint = 'http://localhost:8080/api/User';
-const endpoint = 'http://flip3.engr.oregonstate.edu:8080/api/User';
-
-
+const endpoint = url + "User";
 var _id_user = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -60,6 +57,7 @@ function update() {
 
     if (isEmpty(input_firstname) && isEmpty(input_lastname) && isEmpty(input_username) && isEmpty(input_password) && isEmpty(input_repassword)){
         //No fields can be empty
+        alert("No fields can be empty!");
         console.log("No fields can be empty!");
         return;
     }
@@ -68,6 +66,11 @@ function update() {
         //Passwords must be the same!
         console.log("Passwords must be the same!");
         alert("Passwords must be the same!");
+        return;
+    }
+
+    let isExecuted = confirm("Are you sure to update this User?");
+    if (!isExecuted) {
         return;
     }
 
@@ -82,6 +85,9 @@ function update() {
     // var requestUrl = endpoint + formatParams(params);
     console.log("RequestUrl POST: " + endpoint);
     console.log("DataToSend: " + JSON.stringify(payload));
+
+    localStorage.setItem('_username', input_username);
+    localStorage.setItem('_password', input_password);
 
     let dataReceived = "";
     let dataToSend = JSON.stringify(payload);
@@ -115,25 +121,7 @@ function update() {
     console.log(`Received: ${dataReceived}`)
 }
 
-function formatParams(params) {
-    return "?" + Object
-        .keys(params)
-        .map(function (key) {
-            return key + "=" + encodeURIComponent(params[key])
-        })
-        .join("&")
-}
-
-function getValue(item) {
-    return localStorage.getItem(item);
-}
-
-function isEmpty(value){
-    if (value == null){
-        return true;
-    } else if (value == ''){
-        return true;
-    } else {
-        return false;
-    }
+function deleteUser(){
+    let isExecuted = confirm("Are you sure to delete this User?");
+    console.log(isExecuted); // OK = true, Cancel = false
 }
